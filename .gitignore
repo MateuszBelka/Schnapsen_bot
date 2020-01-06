@@ -1,6 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 
-*.pdf
 *.pkl
 
 todo.txt
@@ -216,4 +215,3 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
