@@ -88,4 +88,65 @@ def heuristic(state):
     :param state:
     :return: A heuristic evaluation for the given state (between -1.0 and 1.0)
     """
-    return util.ratio_points(state, 1) * 2.0 - 1.0, None
+
+
+    if state.get_points(1) > 66:
+        return 1.0, None
+    elif state.get_points(2) > 66:
+        return -1.0, None
+
+    score_diff = state.get_points(1) - state.get_points(2)
+    score_sum = state.get_points(1) + state.get_points(2)
+    return score_diff / score_sum, None
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" Attempt at heuristic """
+
+# ISSUE: How can I pass function as argument such that I can call this function later
+#
+#     Each has 33% influence on final eval
+#     trump card or merriage played +/- 0.33
+#     hand strength above average +/- 0.33
+#     higher score than opponent +/- 0.33
+#
+#     heur_eval = 0.00
+#     functions_to_eval = ["", "", "stronger_score"]
+#     no_eval_funcs = len(func_to_eval)
+#
+#     for function in functions_to_eval:
+#         heur_eval = update_heur_eval(state, function, heur_eval, no_eval_funcs)
+#
+#
+#     return heur_eval, None
+#
+# def update_heur_eval(state, func, heur_eval, no_eval_funcs):
+#
+#     if func(state):
+#         heur_eval += 1/no_eval_funcs
+#     else:
+#         heur_eval -= 1/no_eval_funcs
+#
+#     return heur_eval
+#
+# def played_trump_or_marriage(state):
+#     # type: (State) -> boolean
+#
+#
+# def hand_str_above_avg(state):
+#     # type: (State) -> boolean
+#     pass
+#
+# def stronger_score(state):
+#     # type: (State) -> boolean
+#     pass
