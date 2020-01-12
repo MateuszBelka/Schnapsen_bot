@@ -39,7 +39,7 @@ class Bot:
             return best_non_trump_card(state)
 
         #IMPLEMENT: Make a random move (but exclude the best non-trump move from above)
-        return random.choice((list(set(state.moves()) - set(best_non_trump_card(state)))))
+        return random.choice((list(set(state.moves()) - set(best_non_trump_card(state))))) if state.moves() != [] else (None, None)
 
 def empty(n):
     """
