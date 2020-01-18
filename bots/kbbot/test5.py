@@ -1,7 +1,7 @@
-from .kb import KB, Boolean, Integer
+import sys
+from kb import KB, Boolean, Integer, Constant
 
-# Initialise all variables that you need for you strategies and game knowledge.
-# Add those variables here.. The following list is complete for the Cheap Play strategy.
+# Define our propositional symbols
 A0 = Boolean('a0')
 A1 = Boolean('a1')
 A2 = Boolean('a2')
@@ -128,81 +128,90 @@ PC17 = Boolean('pc17')
 PC18 = Boolean('pc18')
 PC19 = Boolean('pc19')
 
-def general_information(kb):
-    # GENERAL INFORMATION ABOUT THE CARDS
-    kb.add_clause(J4)
-    kb.add_clause(J9)
-    kb.add_clause(J14)
-    kb.add_clause(J19)
+# Create a new knowledge base
+kb = KB()
 
-    kb.add_clause(Q3)
-    kb.add_clause(Q8)
-    kb.add_clause(Q13)
-    kb.add_clause(Q18)
+# GENERAL INFORMATION ABOUT THE CARDS
+kb.add_clause(J4)
+kb.add_clause(J9)
+kb.add_clause(J14)
+kb.add_clause(J19)
 
-    kb.add_clause(K2)
-    kb.add_clause(K7)
-    kb.add_clause(K12)
-    kb.add_clause(K17)
+kb.add_clause(Q3)
+kb.add_clause(Q8)
+kb.add_clause(Q13)
+kb.add_clause(Q18)
 
-def strategy_knowledge(kb):
-    # DEFINITION OF THE STRATEGY
-    kb.add_clause(~PC2,J2,Q2,K2)
-    kb.add_clause(PC2,~K2)
-    kb.add_clause(PC2,~Q2)
-    kb.add_clause(PC2,~J2)
+kb.add_clause(K2)
+kb.add_clause(K7)
+kb.add_clause(K12)
+kb.add_clause(K17)
 
-    kb.add_clause(~PC3,J3,Q3,K3)
-    kb.add_clause(PC3,~K3)
-    kb.add_clause(PC3,~Q3)
-    kb.add_clause(PC3,~J3)
+# DEFINITION OF THE STRATEGY
+kb.add_clause(~PC2,J2,Q2,K2)
+kb.add_clause(PC2,~K2)
+kb.add_clause(PC2,~Q2)
+kb.add_clause(PC2,~J2)
 
-    kb.add_clause(~PC4,J4,Q4,K4)
-    kb.add_clause(PC4,~K4)
-    kb.add_clause(PC4,~Q4)
-    kb.add_clause(PC4,~J4)
+kb.add_clause(~PC3,J3,Q3,K3)
+kb.add_clause(PC3,~K3)
+kb.add_clause(PC3,~Q3)
+kb.add_clause(PC3,~J3)
 
-    kb.add_clause(~PC7,J7,Q7,K7)
-    kb.add_clause(PC7,~K7)
-    kb.add_clause(PC7,~Q7)
-    kb.add_clause(PC7,~J7)
+kb.add_clause(~PC4,J4,Q4,K4)
+kb.add_clause(PC4,~K4)
+kb.add_clause(PC4,~Q4)
+kb.add_clause(PC4,~J4)
 
-    kb.add_clause(~PC8,J8,Q8,K8)
-    kb.add_clause(PC8,~K8)
-    kb.add_clause(PC8,~Q8)
-    kb.add_clause(PC8,~J8)
+kb.add_clause(~PC7,J7,Q7,K7)
+kb.add_clause(PC7,~K7)
+kb.add_clause(PC7,~Q7)
+kb.add_clause(PC7,~J7)
 
-    kb.add_clause(~PC9,J9,Q9,K9)
-    kb.add_clause(PC9,~K9)
-    kb.add_clause(PC9,~Q9)
-    kb.add_clause(PC9,~J9)
+kb.add_clause(~PC8,J8,Q8,K8)
+kb.add_clause(PC8,~K8)
+kb.add_clause(PC8,~Q8)
+kb.add_clause(PC8,~J8)
 
-    kb.add_clause(~PC12,J12,Q12,K12)
-    kb.add_clause(PC12,~K12)
-    kb.add_clause(PC12,~Q12)
-    kb.add_clause(PC12,~J12)
+kb.add_clause(~PC9,J9,Q9,K9)
+kb.add_clause(PC9,~K9)
+kb.add_clause(PC9,~Q9)
+kb.add_clause(PC9,~J9)
 
-    kb.add_clause(~PC13,J13,Q13,K13)
-    kb.add_clause(PC13,~K13)
-    kb.add_clause(PC13,~Q13)
-    kb.add_clause(PC13,~J13)
+kb.add_clause(~PC12,J12,Q12,K12)
+kb.add_clause(PC12,~K12)
+kb.add_clause(PC12,~Q12)
+kb.add_clause(PC12,~J12)
 
-    kb.add_clause(~PC14,J14,Q14,K14)
-    kb.add_clause(PC14,~K14)
-    kb.add_clause(PC14,~Q14)
-    kb.add_clause(PC14,~J14)
+kb.add_clause(~PC13,J13,Q13,K13)
+kb.add_clause(PC13,~K13)
+kb.add_clause(PC13,~Q13)
+kb.add_clause(PC13,~J13)
 
-    kb.add_clause(~PC17,J17,Q17,K17)
-    kb.add_clause(PC17,~K17)
-    kb.add_clause(PC17,~Q17)
-    kb.add_clause(PC17,~J17)
+kb.add_clause(~PC14,J14,Q14,K14)
+kb.add_clause(PC14,~K14)
+kb.add_clause(PC14,~Q14)
+kb.add_clause(PC14,~J14)
 
-    kb.add_clause(~PC18,J18,Q18,K18)
-    kb.add_clause(PC18,~K18)
-    kb.add_clause(PC18,~Q18)
-    kb.add_clause(PC18,~J18)
+kb.add_clause(~PC17,J17,Q17,K17)
+kb.add_clause(PC17,~K17)
+kb.add_clause(PC17,~Q17)
+kb.add_clause(PC17,~J17)
 
-    kb.add_clause(~PC19,J19,Q19,K19)
-    kb.add_clause(PC19,~K19)
-    kb.add_clause(PC19,~Q19)
-    kb.add_clause(PC19,~J19)
+kb.add_clause(~PC18,J18,Q18,K18)
+kb.add_clause(PC18,~K18)
+kb.add_clause(PC18,~Q18)
+kb.add_clause(PC18,~J18)
+
+kb.add_clause(~PC19,J19,Q19,K19)
+kb.add_clause(PC19,~K19)
+kb.add_clause(PC19,~Q19)
+kb.add_clause(PC19,~J19)
+
+kb.add_clause(~PC4)
+# print all models of the knowledge base
+for model in kb.models():
+    print(model)
+
+# print out whether the KB is satisfiable (if there are no models, it is not satisfiable)
+print(kb.satisfiable())

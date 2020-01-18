@@ -336,7 +336,7 @@ class State:
 
 		rep += "\n"
 		rep += "There are {} cards in the stock\n".format(self.__deck.get_stock_size())
-		
+
 		trick = self.__deck.get_trick()
 		if trick[0] is not None:
 			rep += "Player 1 has played card: {} of {}\n".format(util.get_rank(trick[0]), util.get_suit(trick[0]))
@@ -412,7 +412,7 @@ class State:
 
 	def make_assumption(self):
 		"""
-		Takes the current imperfect information state and makes a 
+		Takes the current imperfect information state and makes a
 		random guess as to the states of the unknown cards.
 		:return: A perfect information state object.
 		"""
@@ -524,11 +524,11 @@ class State:
 			raise RuntimeError("Incorrect trick format. List of length 2 needed.")
 		if trick[0] is None or trick[1] is None:
 			raise RuntimeError("An incomplete trick was attempted to be evaluated.")
-		
+
 		# If the two cards of the trick have the same suit
 		if Deck.get_suit(trick[0]) == Deck.get_suit(trick[1]):
 
-			# We only compare indices since the convention we defined in Deck 
+			# We only compare indices since the convention we defined in Deck
 			# puts higher rank cards at lower indices, when considering the same color.
 			return 1 if trick[0] < trick[1] else 2
 
