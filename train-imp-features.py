@@ -20,7 +20,7 @@ from sklearn.externals import joblib
 
 from bots.rand import rand
 
-from bots.ml.ml import features
+from bots.ml_imp_features.ml_imp_features import features
 
 def create_dataset(path, player=rand.Bot(), games=2000, phase=1):
 

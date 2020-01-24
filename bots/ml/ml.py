@@ -136,7 +136,6 @@ def features(state):
     # Add opponent's played card to feature set
     opponents_played_card = state.get_opponents_played_card()
 
-
     ################## You do not need to do anything below this line ########################
 
     perspective = state.get_perspective()
@@ -186,6 +185,6 @@ def features(state):
     opponents_played_card_onehot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     opponents_played_card_onehot[opponents_played_card if opponents_played_card is not None else 20] = 1
     feature_set += opponents_played_card_onehot
-
+    
     # Return feature set
     return feature_set

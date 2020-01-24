@@ -4,6 +4,7 @@ A basic adaptive bot. This is part of the third worksheet.
 
 """
 
+import math
 from api import State, util, Deck
 import random, os
 from itertools import chain
@@ -12,7 +13,7 @@ from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/model.pkl'
+DEFAULT_MODEL = '/home/matt/github/schnapsen_bot/bots/ml_imp_features' + '/model.pkl'
 
 class Bot:
 
@@ -98,131 +99,97 @@ def features(state):
     # type: (State) -> tuple[float, ...]
     """
     Extract features from this state. Remember that every feature vector returned should have the same length.
+
     :param state: A state to be converted to a feature vector
     :return: A tuple of floats: a feature vector representing this state.
     """
 
     feature_set = []
 
-    perspective = state.get_perspective()
-
-    # Convert the card state array containing strings, to an array of integers.
-    # The integers here just represent card state IDs. In a way they can be
-    # thought of as arbitrary, as long as they are different from each other.
-    perspective = [card if card != 'U' else (-1) for card in perspective]
-    perspective = [card if card != 'S' else 0 for card in perspective]
-    perspective = [card if card != 'P1H' else 1 for card in perspective]
-    perspective = [card if card != 'P2H' else 2 for card in perspective]
-    perspective = [card if card != 'P1W' else 3 for card in perspective]
-    perspective = [card if card != 'P2W' else 4 for card in perspective]
-    feature_set += perspective
-
     # Add player 1's points to feature set
     p1_points = state.get_points(1)
-    feature_set.append(p1_points)
 
     # Add player 2's points to feature set
     p2_points = state.get_points(2)
-    feature_set.append(p2_points)
 
     # Add player 1's pending points to feature set
     p1_pending_points = state.get_pending_points(1)
-    feature_set.append(p1_pending_points)
 
-    # Add player 2's pending points to feature set
+    # Add plauer 2's pending points to feature set
     p2_pending_points = state.get_pending_points(2)
-    feature_set.append(p2_pending_points)
-
-    # Difference between points
-    point_difference = abs(max(p1_points, p2_points) - min(p1_points, p2_points))
-    feature_set.append(point_difference)
-
-    # Difference between pending points
-    pending_point_difference = abs(
-        max(p1_pending_points, p2_pending_points) - min(p1_pending_points, p2_pending_points))
-    feature_set.append(pending_point_difference)
 
     # Get trump suit
     trump_suit = state.get_trump_suit()
 
-    # Convert trump suit to id and add to feature set
-    # You don't need to add anything to this part
-    suits = ["C", "D", "H", "S"]
-    trump_suit_id = suits.index(trump_suit)
-    feature_set.append(trump_suit_id)
-
-    # Trump card ratio:
-    cards = state.hand()
-    trump_card_count = 0
-    for card in cards:
-        if Deck.get_suit(cards[0]) == state.get_trump_suit():
-            trump_card_count += 1
-    if trump_card_count != 0:
-        trump_card_count = (trump_card_count / len(state.hand())) * 100
-    feature_set.append(trump_card_count)
-
-    # High ranking cards ratio:
-    high_rank_count = 0
-    for card in cards:
-        if Deck.get_rank(cards[0]) == "A" or Deck.get_rank(cards[0]) == "10":
-            high_rank_count += 1
-    if high_rank_count != 0:
-        high_rank_count = (high_rank_count / len(state.hand())) * 100
-    feature_set.append(high_rank_count)
-
     # Add phase to feature set
     phase = state.get_phase()
-    feature_set.append(phase)
-
-    # Number of trump cards in phase 2:
-    phase2_trump_cards = 0
-    if phase == 2:
-        phase2_trump_cards = trump_card_count ** 2
-        feature_set.append(phase2_trump_cards)
-    else:
-        feature_set.append(phase2_trump_cards)
 
     # Add stock size to feature set
     stock_size = state.get_stock_size()
-    feature_set.append(stock_size)
 
     # Add leader to feature set
     leader = state.leader()
-    feature_set.append(leader)
 
     # Add whose turn it is to feature set
     whose_turn = state.whose_turn()
-    feature_set.append(whose_turn)
 
     # Add opponent's played card to feature set
     opponents_played_card = state.get_opponents_played_card()
 
+    diff_p = p2_points - p1_points
+
+    ################## You do not need to do anything below this line ########################
+
+    perspective = state.get_perspective()
+
+    # Perform one-hot encoding on the perspective.
+    # Learn more about one-hot here: https://machinelearningmastery.com/how-to-one-hot-encode-sequence-data-in-python/
+    perspective = [card if card != 'U'   else [1, 0, 0, 0, 0, 0] for card in perspective]
+    perspective = [card if card != 'S'   else [0, 1, 0, 0, 0, 0] for card in perspective]
+    perspective = [card if card != 'P1H' else [0, 0, 1, 0, 0, 0] for card in perspective]
+    perspective = [card if card != 'P2H' else [0, 0, 0, 1, 0, 0] for card in perspective]
+    perspective = [card if card != 'P1W' else [0, 0, 0, 0, 1, 0] for card in perspective]
+    perspective = [card if card != 'P2W' else [0, 0, 0, 0, 0, 1] for card in perspective]
+
+    # Append one-hot encoded perspective to feature_set
+    feature_set += list(chain(*perspective))
+
+    # Append normalized points to feature_set
+    total_points = p1_points + p2_points
+    feature_set.append(p1_points/total_points if total_points > 0 else 0.)
+    feature_set.append(p2_points/total_points if total_points > 0 else 0.)
+
+    # Append normalized pending points to feature_set
+    total_pending_points = p1_pending_points + p2_pending_points
+    feature_set.append(p1_pending_points/total_pending_points if total_pending_points > 0 else 0.)
+    feature_set.append(p2_pending_points/total_pending_points if total_pending_points > 0 else 0.)
+
+
+    # Convert trump suit to id and add to feature set
     # You don't need to add anything to this part
-    opponents_played_card = opponents_played_card if opponents_played_card is not None else -1
-    feature_set.append(opponents_played_card)
+    suits = ["C", "D", "H", "S"]
+    trump_suit_onehot = [0, 0, 0, 0]
+    trump_suit_onehot[suits.index(trump_suit)] = 1
+    feature_set += trump_suit_onehot
 
-    # Do I have cards in same suit as oppponent?
-    same_suit_cards = 0
-    for card in cards:
-        if Deck.get_suit(cards[0]) == Deck.get_suit(opponents_played_card):
-            same_suit_cards += 1
-    feature_set.append(same_suit_cards)
+    # Append one-hot encoded phase to feature set
+    feature_set += [1, 0] if phase == 1 else [0, 1]
 
-    # Get number of points in hand
-    cards = state.hand()
-    number_of_points = 0
-    for card in cards:
-        if cards[0] is not None:
-            if Deck.get_rank(cards[0]) == "J":
-                number_of_points += 1 ** 2
-            elif Deck.get_rank(cards[0]) == "Q":
-                number_of_points += 2 ** 2
-            elif Deck.get_rank(cards[0]) == "K":
-                number_of_points += 3 ** 2
-            elif Deck.get_rank(cards[0]) == "10":
-                number_of_points += 10 ** 2
-            elif Deck.get_rank(cards[0]) == "A":
-                number_of_points += 11 ** 2
+    # Append normalized stock size to feature set
+    feature_set.append(stock_size/10)
 
-    feature_set.append(number_of_points)
+    # Append one-hot encoded leader to feature set
+    feature_set += [1, 0] if leader == 1 else [0, 1]
+
+    # Append one-hot encoded whose_turn to feature set
+    feature_set += [1, 0] if whose_turn == 1 else [0, 1]
+
+    # Append one-hot encoded opponent's card to feature set
+    opponents_played_card_onehot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    opponents_played_card_onehot[opponents_played_card if opponents_played_card is not None else 20] = 1
+    feature_set += opponents_played_card_onehot
+
+    feature_set.append(diff_p/total_points if total_points > 0 else 0.)
+
+    # Return feature set
     return feature_set
