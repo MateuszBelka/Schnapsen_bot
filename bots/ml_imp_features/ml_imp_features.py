@@ -189,6 +189,7 @@ def features(state):
     opponents_played_card_onehot[opponents_played_card if opponents_played_card is not None else 20] = 1
     feature_set += opponents_played_card_onehot
 
+    # MS 4 Questions 4 my solution:
     feature_set.append(diff_p/total_points if total_points > 0 else 0.)
 
     # Return feature set
