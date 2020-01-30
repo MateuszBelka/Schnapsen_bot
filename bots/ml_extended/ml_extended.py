@@ -4,7 +4,7 @@ A basic adaptive bot. This is part of the third worksheet.
 
 """
 
-from api import State, util
+from api import State, util, Deck
 import random, os
 from itertools import chain
 
@@ -185,6 +185,85 @@ def features(state):
     opponents_played_card_onehot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     opponents_played_card_onehot[opponents_played_card if opponents_played_card is not None else 20] = 1
     feature_set += opponents_played_card_onehot
+
+    # Append lowest card value in player hand && ace count && hand strength
+    hand_points = 0.0
+    ace_count = 0.0
+    current_lowest = 0.0
+    for card in player_hand:
+        if Deck.get_rank(card) == "A":
+            if current_lowest < 1.0:
+                current_lowest = 1.0
+            ace_count += 0.2
+            hand_points += 11
+        elif Deck.get_rank(card) == "10":
+            if current_lowest < 0.75:
+                current_lowest = 0.75
+            hand_points += 10
+        elif Deck.get_rank(card) == "K":
+            if current_lowest < 0.5:
+                current_lowest = 0.5
+            hand_points += 4
+        elif Deck.get_rank(card) == "Q":
+            if current_lowest < 0.25:
+                current_lowest = 0.25
+            hand_points += 3
+        elif Deck.get_rank(card) == "J":
+            if current_lowest < 0.0:
+                current_lowest = 0.0
+            hand_points += 2
+
+    feature_set.append(current_lowest)
+    feature_set.append(ace_count)
+    feature_set.append(hand_points/max_hand_points)
+
+    # Append lowest card value in opponent's hand && ace count && opponent hand strength
+    hand_points_opp = 0.0
+    ace_count_opp = 0.0
+    current_lowest_opp = 0.0
+    if (phase == 2):
+        for card in opponent_hand:
+            if Deck.get_rank(card) == "A":
+                if current_lowest_opp < 1.0:
+                    current_lowest_opp = 1.0
+                ace_count_opp += 0.2
+                hand_points_opp += 11
+            elif Deck.get_rank(card) == "10":
+                if current_lowest_opp < 0.75:
+                    current_lowest_opp = 0.75
+                hand_points_opp += 10
+            elif Deck.get_rank(card) == "K":
+                if current_lowest_opp < 0.5:
+                    current_lowest_opp = 0.5
+                hand_points_opp += 4
+            elif Deck.get_rank(card) == "Q":
+                if current_lowest_opp < 0.25:
+                    current_lowest_opp = 0.25
+                hand_points_opp += 3
+            elif Deck.get_rank(card) == "J":
+                if current_lowest_opp < 0.0:
+                    current_lowest_opp = 0.0
+                hand_points_opp += 2
+    feature_set.append(current_lowest_opp)
+    feature_set.append(ace_count_opp)
+    feature_set.append(hand_points_opp/max_hand_points)
+
+    # Append how many cards of opponent's suit do you have
+    same_suit_cards = 0.0
+    cards_in_hand = len(player_hand)
+    for card in player_hand:
+        if opponents_played_card is not None:
+            if Deck.get_suit(card) == Deck.get_suit(opponents_played_card):
+                same_suit_cards += 1
+    feature_set.append(same_suit_cards/cards_in_hand)
+
+    # Append one-hot encoded points difference
+    p_diff = p1_points - p2_points
+    feature_set += [p_diff, 0] if p_diff > 0 else [0, -1 * p_diff]
+
+    # Append one-hot encoded pending points difference
+    pp_diff = p1_pending_points - p2_pending_points
+    feature_set += [pp_diff, 0] if pp_diff > 0 else [0, -1 * pp_diff]
 
     # Return feature set
     return feature_set
