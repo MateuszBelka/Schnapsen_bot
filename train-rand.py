@@ -89,7 +89,7 @@ parser.add_argument("-d", "--dset-path",
 
 parser.add_argument("-m", "--model-path",
                     dest="model_path",
-                    help="Optional model path. Note that this path starts in bots/ml/ instead of the base folder, like dset_path above.",
+                    help="Optional model path. Note that this path starts in bots/ml_rand/ instead of the base folder, like dset_path above.",
                     default="model.pkl")
 
 parser.add_argument("-o", "--overwrite",
@@ -151,7 +151,7 @@ if options.train:
     print('instances per class: {}'.format(count))
 
     # Store the model in the ml directory
-    joblib.dump(model, "./bots/ml/" + options.model_path)
+    joblib.dump(model, "./bots/ml_rand/" + options.model_path)
 
     end = time.time()
 

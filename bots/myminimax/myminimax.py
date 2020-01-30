@@ -88,4 +88,7 @@ def heuristic(state):
     :param state:
     :return: A heuristic evaluation for the given state (between -1.0 and 1.0)
     """
-    return util.ratio_points(state, 1) * 2.0 - 1.0, None
+
+    player = state.whose_turn()
+    sum_points = state.get_points(player) + state.get_points(util.other(player))
+    return util.difference_points(state, player)/sum_points, None

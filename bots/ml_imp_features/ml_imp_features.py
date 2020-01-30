@@ -4,7 +4,8 @@ A basic adaptive bot. This is part of the third worksheet.
 
 """
 
-from api import State, util
+import math
+from api import State, util, Deck
 import random, os
 from itertools import chain
 
@@ -12,7 +13,7 @@ from sklearn.externals import joblib
 
 # Path of the model we will use. If you make a model
 # with a different name, point this line to its path.
-DEFAULT_MODEL = os.path.dirname(os.path.realpath(__file__)) + '/model.pkl'
+DEFAULT_MODEL = '/home/matt/github/schnapsen_bot/bots/ml_imp_features/model.pkl'
 
 class Bot:
 
@@ -94,7 +95,6 @@ def maximizing(state):
     """
     return state.whose_turn() == 1
 
-
 def features(state):
     # type: (State) -> tuple[float, ...]
     """
@@ -136,6 +136,8 @@ def features(state):
     # Add opponent's played card to feature set
     opponents_played_card = state.get_opponents_played_card()
 
+    diff_p = p2_points - p1_points
+
     ################## You do not need to do anything below this line ########################
 
     perspective = state.get_perspective()
@@ -162,6 +164,7 @@ def features(state):
     feature_set.append(p1_pending_points/total_pending_points if total_pending_points > 0 else 0.)
     feature_set.append(p2_pending_points/total_pending_points if total_pending_points > 0 else 0.)
 
+
     # Convert trump suit to id and add to feature set
     # You don't need to add anything to this part
     suits = ["C", "D", "H", "S"]
@@ -185,6 +188,9 @@ def features(state):
     opponents_played_card_onehot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     opponents_played_card_onehot[opponents_played_card if opponents_played_card is not None else 20] = 1
     feature_set += opponents_played_card_onehot
-    
+
+    # MS 4 Questions 4 my solution:
+    feature_set.append(diff_p/total_points if total_points > 0 else 0.)
+
     # Return feature set
     return feature_set
