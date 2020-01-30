@@ -266,6 +266,12 @@ class State:
 		"""
 		return self.__deck.get_player_hand(self.whose_turn())
 
+	def hand_opponent(self):
+		"""
+		:return: An array of indices representing the cards in the opponent player's hand
+		"""
+		return self.__deck.get_player_hand(util.other(self.whose_turn()))
+
 
 	def clone(self, signature=None):
 		"""
