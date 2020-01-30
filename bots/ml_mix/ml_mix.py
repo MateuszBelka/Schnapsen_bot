@@ -140,7 +140,9 @@ def features(state):
 
     opponent_hand = state.hand_opponent()
 
-    max_hand_points = len(player_hand) * 11 # ace is worth 11 points
+    cards_in_hand = 5 # there are 5 cards in a hand at all times
+    
+    max_hand_points = cards_in_hand * 11 # ace is worth 11 points
 
 
     ################## You do not need to do anything below this line ########################
@@ -233,7 +235,7 @@ def features(state):
 
     # Append how many cards of opponent's suit do you have
     same_suit_cards = 0.0
-    cards_in_hand = len(player_hand)
+
     for card in player_hand:
         if opponents_played_card is not None:
             if Deck.get_suit(card) == Deck.get_suit(opponents_played_card):
