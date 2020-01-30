@@ -18,11 +18,11 @@ import sklearn.linear_model
 from sklearn.neural_network import MLPClassifier
 from sklearn.externals import joblib
 
-from bots.rand import rand
+from bots.rdeep import rdeep
 
 from bots.ml.ml import features
 
-def create_dataset(path, player=rand.Bot(), games=2000, phase=1):
+def create_dataset(path, player=rdeep.Bot(), games=2000, phase=1):
 
     data = []
     target = []
@@ -89,7 +89,7 @@ parser.add_argument("-d", "--dset-path",
 
 parser.add_argument("-m", "--model-path",
                     dest="model_path",
-                    help="Optional model path. Note that this path starts in bots/ml/ instead of the base folder, like dset_path above.",
+                    help="Optional model path. Note that this path starts in bots/ml_rdeep/ instead of the base folder, like dset_path above.",
                     default="model.pkl")
 
 parser.add_argument("-o", "--overwrite",
@@ -106,7 +106,7 @@ parser.add_argument("--no-train",
 options = parser.parse_args()
 
 if options.overwrite or not os.path.isfile(options.dset_path):
-    create_dataset(options.dset_path, player=rand.Bot(), games=10000)
+    create_dataset(options.dset_path, player=rdeep.Bot(), games=10000)
 
 if options.train:
 
@@ -151,7 +151,7 @@ if options.train:
     print('instances per class: {}'.format(count))
 
     # Store the model in the ml directory
-    joblib.dump(model, "./bots/ml/" + options.model_path)
+    joblib.dump(model, "./bots/ml_rdeep/" + options.model_path)
 
     end = time.time()
 

@@ -20,7 +20,7 @@ from sklearn.externals import joblib
 
 from bots.rand import rand
 
-from bots.ml.ml import features
+from bots.ml_extended.ml_extended import features
 
 def create_dataset(path, player=rand.Bot(), games=2000, phase=1):
 
@@ -151,7 +151,7 @@ if options.train:
     print('instances per class: {}'.format(count))
 
     # Store the model in the ml directory
-    joblib.dump(model, "./bots/ml/" + options.model_path)
+    joblib.dump(model, "./bots/ml_extended/" + options.model_path)
 
     end = time.time()
 
