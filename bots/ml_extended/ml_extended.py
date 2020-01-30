@@ -136,6 +136,14 @@ def features(state):
     # Add opponent's played card to feature set
     opponents_played_card = state.get_opponents_played_card()
 
+    player_hand = state.hand()
+
+    opponent_hand = state.hand_opponent()
+
+    cards_in_hand = 5 # there are 5 cards in a hand at all times
+
+    max_hand_points = cards_in_hand * 11 # ace is worth 11 points
+
     ################## You do not need to do anything below this line ########################
 
     perspective = state.get_perspective()
