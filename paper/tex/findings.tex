@@ -1,0 +1,31 @@
+\documentclass[master]{subfiles}
+\begin{document}
+\section{Findings}
+\subsection{Phase \texorpdfstring{$1 \& 2$}{1\&2}}
+\subsubsection{Rand bot} 
+\hfill\\ % force new line
+The ml bot has slightly better results in comparison to the ml\_extended bot, mainly due to the randomness of the strategy that rand is uses. The worst performance was shown by ml\_mix, which combines properties of ml\_extended and ml\_limited. All the variations of the ml bot had at least 3 times more wins than losses.
+\subsubsection{Bully bot} 
+\hfill\\ 
+The ml\_extended has noticeably better results from the games than other variations of the ml bot. Ml\_limited showed the worst performance. All the variations of the ml bot had at least three times more wins than losses.
+\subsubsection{Rdeep bot} 
+\hfill\\ 
+In the situation with rdeep, the results are entirely different. First of all, in all scenarios, rdeep wins more than variations ml bots. If we are comparing ml bots between each other, then the ml\_extended has slightly better performance than ml. The worst rate of wins was demonstrated by ml\_limited.
+\subsection{Phase \texorpdfstring{$2$}{2}}
+The overall performance of all variations of ml agent is significantly worse while playing matches in phase 2. The default agent had approximately $59.59\%$ win rate while starting the match in phase 1, and when it starts in phase the win rate drops to $47.00\%$. Moreover, on average there is more narrow difference between the performance of new implementations of ml agent against the default ml agent. That suggests that new implementations of ml agent are closer to each other in overall performance while playing only in phase $2$.
+\subsubsection{Rand bot} 
+\hfill\\
+In direct comparison of default ml agent's performance against rand and new implementations of ml agent it can be observed that depending on the feature vector of ml agent there is a significant deviation between results. Ml\_extended is the only bot outperforming default agent. Both ml\_limited and ml\_mix have remarkably low performance. Those results suggest that while playing in phase $2$ it is beneficial to provide ml agent with additional features in feature vector, however, it does not provide noticeable performance gains. 
+\subsubsection{Bully bot} 
+\hfill\\
+In contrast to rand bot, in the case of bully bot all variations of ml agent perform worse than default agent. The ranking of which agent performs the best stays consistent rating ml\_extended as the best, followed by ml\_limited and ml\_mix being at the end. The performance loss is likely due to implementing features which do not allow for prediction of bully's actions.
+\subsubsection{Rdeep bot} 
+\hfill\\
+Ml\_extended doesn't display deviation from default agent's performance. Ml\_limited peculiarly outperformed ml\_extended as well as the default ml agent. Ml\_mix continuously underperforms.
+\subsubsection{Minimax bot} 
+\hfill\\
+The performance of new ml agents differs from the usual representation. The unusual results might be the outcome of the unique way minimax acquires it's strategies for move choice. For the first and only time ml\_mix outperforms all other ml variations. That would suggest that the new features have considerable advantage over the default features that were removed in the ml\_limited.
+\subsubsection{Alpha-beta bot} 
+\hfill\\
+Unexpectedly, alpha-beta bot doesn't follow the outcomes observed with minimax. Instead, the standard order of performance is seen as well as a performance loss in all three new ml bot implementations in comparison to default one.
+\end{document}
