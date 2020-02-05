@@ -1,0 +1,18 @@
+\documentclass[master]{subfiles}
+\begin{document}
+\section{Background Information}
+\subsection{General}
+Schnapsen or Schnapser is an Austrian card game, consisting of 20 cards with different ranks from highest to lowest: Ace, 10, King, Queen and Jack. Each of them gives points as follows: 11, 10, 4, 3, 2. You always have to have five cards in your hand. The goal of the game is to obtain 66 points as fast as you can by taking tricks and bidding: you are getting points if the rank of your hard is higher than the opponent's, which would mean you are winning the round. One of the ways to obtain a large number of points is by marriages: if a player has a king or queen of the same suit, he or she can play a card and show another to the opponent. The marriage of cards that are non-trump-suit gives 20 points, of trump-suit gives 40 points. It is not always straightforward due to the heuristics of the game: opponent always interferes with your objectives. Thus, a player cannot set a specific objective. Schnapsen contains imperfect information, which leads to an increase in uncertainty in the game. Thus, hundreds of situations may occur. Building a bot that will win based on some heuristics and strategies is complex and challenging for multiple reasons. In order to design it, the game needs to be analyzed and multiple algorithms and heuristic strategies discussed.
+\subsection{Bots}
+The provided framework includes five agents to play against different versions of machine learning bot:
+\begin{enumerate}
+\item Rand bot: \\
+Rand bot is a simple agent: it enumerates legal moves and chooses a random move.
+\item Rdeep bot: \\
+The rdeep bot assumes that players have the rand strategy and samples N amount of random games from the given move, ranks move by averaging heuristics of the following state.
+\item Bully bot: \\
+The bully bot makes 3 checks: if it has trump suit, it will play it. If it does not have, it will play the card of the same suit. Otherwise, if neither is found, it will make a move with the highest rank available.
+\item Minimax and alpha-beta bot: \\
+The bot is working only in phase 2 due to the fact that the information at this moment is perfect. It estimates the states, makes the best move and minimizes the outcome for the player. 
+\end{enumerate}
+\end{document}

@@ -1,0 +1,36 @@
+\documentclass[runningheads]{llncs}
+
+%if you'd still get warning, the text is outside page
+\hfuzz=122pt
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\pagestyle{plain}
+\newcommand{\upperRomannumeral}[1]{\uppercase\expandafter{\romannumeral#1}}
+
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{enumerate}
+\usepackage{changepage}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{lmodern} % choose a font that is available as T1
+\usepackage[T1]{fontenc} % specify encoding
+\usepackage{textcomp} % load symbol definitions
+\usepackage{subfiles}
+
+
+\begin{document}
+\subfile{title}
+\subfile{abstract}
+\subfile{intro}
+\subfile{background}
+\subfile{researchquestion}
+\subfile{experiment}
+\subfile{results}
+\subfile{findings}
+\subfile{conclusion}
+\subfile{references}
+\subfile{appendix}
+\end{document}

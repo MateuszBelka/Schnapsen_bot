@@ -1,0 +1,77 @@
+\documentclass[master]{subfiles}
+\begin{document}
+\section{Results}
+
+\begin{figure}
+\centering
+\begin{adjustwidth}{-100pt}{}
+
+\begin{tabular}{ | l | l l | l l | l l | l l | l l | l l | l l || l l | }
+\hline
+& \textbf{rand} & & \textbf{bully} & & \textbf{rdeep} & & \textbf{ml} & & \textbf{ml\_extended} & & \textbf{ml\_limited} & & \textbf{ml\_mix} & & \textbf{Total} & \\
+& wins & losses & wins & losses & wins & losses  & wins & losses  & wins & losses  & wins & losses  & wins & losses  & wins & losses \\ \hline
+ml & 1534 & 264 & 1179 & 373 & 660 & 884 & & & 756 & 714 & 838 & 660 & 858 & 608 & 5165 & 3503\\ \hline
+ml\_extended & 1533 & 256 & 1249 & 273 & 690 & 783 & 746 & 729 & & & 847 & 648 & 832 & 632 & 5897 & 3321 \\ \hline
+ml\_limited & 1422 & 311 & 1155 & 320 & 584 & 910 & 692 & 788 & 651 & 819 & & & 787 & 674 & 5291 & 3822 \\ \hline
+ml\_mix & 1361 & 358 & 1157 & 348 & 622 & 850 & 603 & 908 & 575 & 860 & 713 & 735 & & & 5031 & 4059 \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+\caption{Overview of wins and losses (given in points) for each variation of ML agent in phase 1 \& 2}
+\label{fig:overviewp12}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{adjustwidth}{-0pt}{}
+
+\begin{tabular}{ | l | l | l | l | l | l | l || l | }
+\hline
+& \textbf{rand} & \textbf{bully} & \textbf{rdeep} & \textbf{ml\_extended} & \textbf{ml\_limited} & \textbf{ml\_mix} & \textbf{Average} \\ \hline
+ml\_extended & 0.00\% & 5.60\% & 4.35\% &  & 1.06\% & -3.13\% & 1.58\% \\ \hline
+ml\_limited & -7.30\% & -2.08\% & -13.01\% & -16.13\% & & -9.02\% & -9.51\% \\ \hline
+ml\_mix & -11.28\% & -1.90\% & -6.11\% & -31.48\% & -17.53\% & & -13.66\% \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+\caption{Overview of performance gain or lose for each new implementation of ML agent against the default model in phase 1 \& 2}
+\label{fig:overviewp12percent}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{adjustwidth}{-30pt}{}
+
+\begin{tabular}{ | l | l l | l l | l l | l l | l l || l l | }
+\hline
+& \textbf{rand} & & \textbf{bully} & & \textbf{rdeep} & & \textbf{minimax} & & \textbf{alpha-beta} & & \textbf{Total} & \\
+& wins & losses  & wins & losses  & wins & losses  & wins & losses  & wins & losses  & wins & losses \\ \hline
+ml &  673 & 479 & 766 & 476 & 447 & 788 & 478 & 751 & 493 & 728 & 2857 & 3222\\ \hline
+ml\_extended & 681 & 492 & 717 & 545 & 447 & 770 & 471 & 778 & 474 & 729 & 2790 & 3314 \\ \hline
+ml\_limited & 611 & 548 & 656 & 582 & 452 & 771 & 475 & 788 & 464 & 758 & 2658 & 3447 \\ \hline
+ml\_mix & 574 & 566 & 644 & 576 & 423 & 810 & 506 & 739 & 445 & 762 & 2592 & 3453 \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+\caption{Overview of wins and losses (given in points) for each variation of ML agent in phase  2}
+\label{fig:overviewp2}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{adjustwidth}{-0pt}{}
+
+\begin{tabular}{ | l | l | l | l | l | l || l | }
+\hline
+& \textbf{rand} & \textbf{bully} & \textbf{rdeep} & \textbf{minimax} & \textbf{alpha-beta} & \textbf{Average} \\ \hline
+ml\_extended & 1.17\% & -6.83\% & 0.00\% & -1.49\% & -4.01\% & -2.23\% \\ \hline
+ml\_limited & -10.15\% & -16.77\% & 1.11\% & 0.63\% & -6.25\% & -6.29\% \\ \hline
+ml\_mix & -17.25\% & -18.94\% & -5.67\% & 5.53\% & -10.79\% & -9.42\% \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+\caption{Overview of wins and losses (given in points) for each variation of ML agent in phase  2}
+\label{fig:overviewp2percent}
+\end{figure}
+\clearpage
+\end{document}
